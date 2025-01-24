@@ -6,10 +6,10 @@ The canUnlockAll function determines if all boxes can be unlocked
 by using the keys found in other boxes.
 """
 
-# Rename the file to '0_lockboxes.py' and then import it
-import 0_lockboxes  # Ensure the file is named correctly without hyphen
+# Rename the file to '_0_lockboxes.py' and then import it
+import _0_lockboxes  # Ensure the file is named correctly without hyphen
 
-print(0_lockboxes.__doc__)
+print(_0_lockboxes.__doc__)
 
 def canUnlockAll(boxes):
     unlocked = set()  # Set of unlocked box indices
