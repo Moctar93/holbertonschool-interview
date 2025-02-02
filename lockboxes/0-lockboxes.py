@@ -1,27 +1,28 @@
 #!/usr/bin/python3
+"""Exercise to practice interview"""
+from itertools import dropwhile
 
-"""
-Module for checking if all boxes can be unlocked.
-The canUnlockAll function determines if all boxes can be unlocked
-by using the keys found in other boxes.
-"""
-
-import _0_lockboxes  # Import the renamed module
-
-print(_0_lockboxes.__doc__)  # Print the module's docstring
 
 def canUnlockAll(boxes):
-    unlocked = set()  # Set of unlocked box indices
-    unlocked.add(0)   # Start with box 0 being unlocked
+    """Checks if all boxes can be unlocked"""
 
-    # Iterate over the boxes that are currently unlocked
-    for box_index in unlocked:
-        # Go through the keys in the current box
-        for key in boxes[box_index]:
-            # If the key corresponds to a box that isn't unlocked yet, unlock it
-            if key < len(boxes) and key not in unlocked:
-                unlocked.add(key)
+    keys = {0}
+    range_boxes = range(len(boxes))
 
-    # If the number of unlocked boxes is equal to the total number of boxes, return True
-    return len(unlocked) == len(boxes)
+    while True:
+        not_found = set()
 
+        for i in range_boxes:
+            if i in keys:
+                for key in dropwhile(lambda k: k in keys, boxes[i]):
+                    keys.add(key)
+            else:
+                not_found.add(i)
+
+        if range_boxes == not_found:
+            return False
+
+        if not not_found:
+            return True
+
+        range_boxes = not_found
