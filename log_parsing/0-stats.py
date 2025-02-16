@@ -41,16 +41,22 @@ def main():
         for line in sys.stdin:
             line_count += 1
 
+            # Debugging: Print the line being processed
+            print(f"Processing line: {line.strip()}", file=sys.stderr)
+
             # Parse the line
             parts = line.split()
             if len(parts) < 7:
+                print("Skipping line: Invalid format", file=sys.stderr)
                 continue
 
             # Extract file size and status code
             try:
                 file_size = int(parts[-1])
                 status_code = int(parts[-2])
+                print(f"Extracted file size: {file_size}, status code: {status_code}", file=sys.stderr)
             except (ValueError, IndexError):
+                print("Skipping line: Invalid file size or status code", file=sys.stderr)
                 continue
 
             # Update total file size
@@ -59,6 +65,7 @@ def main():
             # Update status code counts
             if status_code in valid_status_codes:
                 status_counts[status_code] = status_counts.get(status_code, 0) + 1
+                print(f"Updated status counts: {status_counts}", file=sys.stderr)
 
             # Print stats every 10 lines
             if line_count % 10 == 0:
