@@ -3,12 +3,12 @@
 """
 Module for calculating the minimum number of operations to reach exactly n 'H' characters.
 
-The minOperations function calculates the fewest number of operations needed to result in 
+The minOperations function calculates the fewest number of operations needed to result in
 exactly n 'H' characters in a file. The only two operations allowed are:
 1. Copy All: Copies all characters in the file.
 2. Paste: Pastes the copied content into the file.
 
-Given a number n, the function returns the minimum number of operations required to 
+Given a number n, the function returns the minimum number of operations required to
 reach exactly n 'H' characters, or returns 0 if it is impossible to achieve.
 
 The approach is based on prime factorization to efficiently reach the desired count of characters.
