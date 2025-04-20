@@ -4,19 +4,24 @@ const request = require('request');
 const filmId = process.argv[2];
 const url = `https://swapi-api.hbtn.io/api/films/${filmId}`;
 
-request(url, async (err, response, body) => {
-  if (err) {
-    console.log(err);
-  }
-  for (const characterId of JSON.parse(body).characters) {
-    await new Promise((resolve, reject) => {
-      request(characterId, (err, response, body) => {
-        if (err) {
-          reject(err);
-        }
-        console.log(JSON.parse(body).name);
-        resolve();
-      });
+// Récupérer le film
+request(url, (err, res, body) => {
+  if (err) return console.error(err);
+
+  const characters = JSON.parse(body).characters;
+
+  // Fonction pour afficher les noms dans l'ordre
+  const printCharacters = (index) => {
+    if (index >= characters.length) return;
+
+    request(characters[index], (err, res, body) => {
+      if (err) return console.error(err);
+
+      console.log(JSON.parse(body).name);
+      printCharacters(index + 1); // Appel récursif pour le suivant
     });
-  }
+  };
+
+  printCharacters(0);
 });
+
