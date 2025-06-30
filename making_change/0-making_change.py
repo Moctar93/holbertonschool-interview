@@ -1,34 +1,18 @@
 #!/usr/bin/python3
-"""
-Make change module
-"""
+"""Making change O(n)"""
 
 
 def makeChange(coins, total):
-    """Given a pile of coins of different values,
-    determine the fewest number of coins
-    needed to meet a given amount 'total'
-
-    Args:
-        coins ([list]): a list of the values of the coins in your possession
-        total ([number]): amount
-    Return: fewest number of coins needed to meet total
-    """
+    """Clasic Bottom-Up dynamic programming"""
     if total <= 0:
         return 0
-
-    coins.sort(reverse=True)
-
-    i, ncoins = (0, 0)
-    cpy_total = total
-    len_coins = len(coins)
-
-    while(i < len_coins and cpy_total > 0):
-        if (cpy_total - coins[i]) >= 0:
-            cpy_total -= coins[i]
-            ncoins += 1
-        else:
-            i += 1
-
-    check = cpy_total > 0 and ncoins > 0
-    return -1 if check or ncoins == 0 else ncoins
+    dp = [float('inf')] * (total + 1)
+    dp[0] = 0
+    coins.sort()
+    for i in range(total + 1):
+        for coin in coins:
+            if coin > i:
+                break
+            if dp[i - coin] != -1:
+                dp[i] = min(dp[i - coin] + 1, dp[i])
+    return dp[total] if dp[total] != float('inf') else -1
