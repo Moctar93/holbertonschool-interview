@@ -1,36 +1,34 @@
 #!/usr/bin/python3
-"""Module used to add two arrays."""
+"""
+Make change module
+"""
 
 
 def makeChange(coins, total):
-    """[Given a pile of coins of different values, determine the fewest number
-            of coins needed to meet a given amount total]
+    """Given a pile of coins of different values,
+    determine the fewest number of coins
+    needed to meet a given amount 'total'
 
     Args:
-            coins ([list]): [list of the values of your the coins]
-                              The value of a coin will always be an int > 0
-            total ([type]): [description]
-
-    Returns:
-            c [int]: (change  [fewest number of coins needed to meet total]
+        coins ([list]): a list of the values of the coins in your possession
+        total ([number]): amount
+    Return: fewest number of coins needed to meet total
     """
-
     if total <= 0:
         return 0
 
-    # verify coins is a valid
-    if (coins is None or len(coins) == 0):
-        return -1
+    coins.sort(reverse=True)
 
-    change = 0
-    my_coins = sorted(coins, reverse=True)
-    money_left = total
+    i, ncoins = (0, 0)
+    cpy_total = total
+    len_coins = len(coins)
 
-    for coin in my_coins:
-        while (money_left % coin >= 0 and money_left >= coin):
-            change += int(money_left / coin)
-            money_left = money_left % coin
+    while(i < len_coins and cpy_total > 0):
+        if (cpy_total - coins[i]) >= 0:
+            cpy_total -= coins[i]
+            ncoins += 1
+        else:
+            i += 1
 
-    change = change if money_left == 0 else -1
-
-    return change
+    check = cpy_total > 0 and ncoins > 0
+    return -1 if check or ncoins == 0 else ncoins
